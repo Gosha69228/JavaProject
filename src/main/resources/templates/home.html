@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная страница</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <style>
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .action-card {
+            background: #f9fbfc;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            width: 200px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .action-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .action-card a {
+            text-decoration: none;
+            font-weight: bold;
+            color: #4e54c8;
+        }
+
+        .action-card a:hover {
+            color: #3b3b9e;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <nav>
+        <ul>
+            <li><a href="/home">Главная</a></li>
+            <li><a href="/transactions">Транзакции</a></li>
+            <li><a href="/budget">Бюджет</a></li>
+            <li><a href="/reports">Отчеты</a></li>
+            <li><a href="/advice">Советы</a></li>
+            <li><a href="/logout">Выход</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <section class="intro">
+        <h1>Добро пожаловать в Финансовое приложение!</h1>
+        <p>Управляйте своими финансами легко и эффективно.</p>
+    </section>
+    <section class="actions">
+        <div class="action-card">
+            <a href="/transactions">Добавить транзакцию</a>
+        </div>
+        <div class="action-card">
+            <a href="/budget">Управлять бюджетом</a>
+        </div>
+        <div class="action-card">
+            <a href="/reports">Посмотреть отчеты</a>
+        </div>
+        <div class="action-card">
+            <a href="/advice">Получить советы по экономии</a>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>© 2024 Финансовое приложение. Все права защищены.</p>
+</footer>
+</body>
+</html>

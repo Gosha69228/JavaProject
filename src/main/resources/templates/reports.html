@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Отчеты</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <style>
+        /* Стили для модального окна */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto; /* Уменьшим отступ сверху */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 90%; /* Ширина будет адаптивной */
+            max-width: 800px; /* Максимальная ширина */
+            border-radius: 5px;
+            word-wrap: break-word; /* Перенос слов */
+            overflow-wrap: break-word; /* Перенос длинных слов */
+            overflow-y: auto; /* Прокрутка по вертикали, если контент не помещается */
+            max-height: 80vh; /* Максимальная высота модального окна */
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        /* Стили для списка отчетов */
+        .report-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .report-item {
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .report-item p {
+            margin: 5px 0;
+        }
+
+        .button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <nav>
+        <ul>
+            <li><a href="/home">Главная</a></li>
+            <li><a href="/transactions">Транзакции</a></li>
+            <li><a href="/budget">Бюджет</a></li>
+            <li><a href="/reports">Отчеты</a></li>
+            <li><a href="/advice">Советы</a></li>
+            <li><a href="/logout">Выход</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <h1>Ваши отчеты</h1>
+    <ul class="report-list">
+        <li th:each="report : ${reports}" class="report-item">
+            <p>Дата: <span th:text="${report.generatedDate}">Дата</span></p>
+            <p>Содержание: <span th:text="${#strings.abbreviate(report.content, 100)}">Содержание</span></p>
+            <button th:onclick="'openModal(\'' + ${report.id} + '\')'">Открыть</button>
+            <a th:href="@{/reports/download/{id}(id=${report.id})}" class="button">Скачать PDF</a>
+        </li>
+    </ul>
+</main>
+
+<!-- Модальные окна для каждого отчета -->
+<div th:each="report : ${reports}" th:id="'modal-' + ${report.id}" class="modal">
+    <div class="modal-content">
+        <span class="close" th:onclick="'closeModal(\'' + ${report.id} + '\')'">&times;</span>
+        <h2>Отчет от <span th:text="${report.generatedDate}">Дата</span></h2>
+        <p th:text="${report.content}">Содержание</p>
+    </div>
+</div>
+
+<footer>
+    <p>© 2024 Финансовое приложение. Все права защищены.</p>
+</footer>
+
+<script>
+    // Функция для открытия модального окна
+    function openModal(modalId) {
+        document.getElementById('modal-' + modalId).style.display = 'block';
+    }
+
+    // Функция для закрытия модального окна
+    function closeModal(modalId) {
+        document.getElementById('modal-' + modalId).style.display = 'none';
+    }
+</script>
+</body>
+</html>

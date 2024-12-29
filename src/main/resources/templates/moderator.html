@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Список пользователей</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <style>
+        .user-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .user-item {
+            background: #fff;
+            border: 1px solid #ddd;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .user-item a {
+            color: #4e54c8;
+            text-decoration: none;
+            font-weight: 700;
+            transition: color 0.3s ease;
+        }
+
+        .user-item a:hover {
+            color: #3b3b9e;
+        }
+
+        .navigation {
+            margin-bottom: 20px;
+        }
+
+        .navigation a {
+            background: #4e54c8;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-right: 10px;
+            transition: background 0.3s ease;
+        }
+
+        .navigation a:hover {
+            background: #3b3b9e;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <nav>
+        <ul>
+            <li><a href="/moderator">Список пользователей</a></li>
+            <li><a href="/logout">Выход</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <h1>Список пользователей</h1>
+    <ul class="user-list">
+        <li th:each="user : ${users}" class="user-item">
+            <a th:href="@{/moderator/user/{id}(id=${user.id})}" th:text="${user.name}"></a>
+        </li>
+    </ul>
+</main>
+
+<footer>
+    <p>© 2024 Финансовое приложение. Все права защищены.</p>
+</footer>
+</body>
+</html>

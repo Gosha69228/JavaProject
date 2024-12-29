@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Советы</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <style>
+        footer {
+            background: linear-gradient(90deg, #4e54c8, #8f94fb);
+            color: white;
+            text-align: center;
+            padding: 5px 0; /* Уменьшена высота отступов */
+            font-size: 0.8em; /* Уменьшен размер шрифта */
+        }
+    </style>
+</head>
+<body>
+<header>
+    <nav>
+        <ul>
+            <li><a href="/home">Главная</a></li>
+            <li><a href="/transactions">Транзакции</a></li>
+            <li><a href="/budget">Бюджет</a></li>
+            <li><a href="/reports">Отчеты</a></li>
+            <li><a href="/advice">Советы</a></li>
+            <li><a href="/logout">Выход</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <h1>Советы по экономии</h1>
+
+    <!-- Список уже сохранённых советов -->
+    <ul>
+        <li th:each="advice : ${advices}">
+            <p th:text="${advice.adviceText}">Текст совета</p>
+            <p>Дата: <span th:text="${advice.dateGenerated}">Дата</span></p>
+        </li>
+    </ul>
+
+    <!-- Кнопка для запроса совета на основе транзакций -->
+    <form method="POST" action="/advice/request">
+        <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+        <button type="submit">Попросить совет</button>
+    </form>
+
+    <!-- Место для отображения совета -->
+    <div>
+        <h3>Полученный совет:</h3>
+        <p th:text="${generatedAdvice}">Здесь будет отображаться ваш совет.</p>
+    </div>
+</main>
+
+<footer>
+    <p>© 2024 Финансовое приложение. Все права защищены.</p>
+</footer>
+
+</body>
+</html>

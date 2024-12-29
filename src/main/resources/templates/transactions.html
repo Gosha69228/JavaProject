@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Транзакции</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<header>
+  <nav>
+    <ul>
+      <li><a href="/home">Главная</a></li>
+      <li><a href="/transactions">Транзакции</a></li>
+      <li><a href="/budget">Бюджет</a></li>
+      <li><a href="/reports">Отчеты</a></li>
+      <li><a href="/advice">Советы</a></li>
+      <li><a href="/logout">Выход</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <h1>Транзакции</h1>
+
+  <!-- Список транзакций -->
+  <section>
+    <h2>Ваши транзакции</h2>
+    <table>
+      <thead>
+      <tr>
+        <th>Дата</th>
+        <th>Тип</th>
+        <th>Категория</th>
+        <th>Сумма</th>
+        <th>Описание</th>
+      </tr>
+      </thead>
+      <tbody>
+      <!-- Генерация транзакций -->
+      <tr th:each="transaction : ${transactions}">
+        <td th:text="${transaction.date}">2024-12-24</td>
+        <td th:text="${transaction.type}">INCOME</td>
+        <td th:text="${transaction.category}">Еда</td>
+        <td th:text="${transaction.amount}">500.00 руб.</td>
+        <td th:text="${transaction.description}">Обед в ресторане</td>
+      </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Форма для добавления новой транзакции -->
+  <section>
+    <h2>Добавить новую транзакцию</h2>
+    <form action="/transactions/new" method="post">
+      <label for="type">Тип:</label>
+      <select id="type" name="type" required>
+        <option value="INCOME">Доход</option>
+        <option value="EXPENSE">Расход</option>
+      </select><br>
+
+      <label for="category">Категория:</label>
+      <input type="text" id="category" name="category" required><br>
+
+      <label for="amount">Сумма:</label>
+      <input type="number" id="amount" name="amount" step="0.01" required><br>
+
+      <label for="date">Дата:</label>
+      <input type="date" id="date" name="date" required><br>
+
+      <label for="description">Описание:</label>
+      <textarea id="description" name="description"></textarea><br>
+
+      <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+      <button type="submit">Добавить</button>
+    </form>
+  </section>
+</main>
+
+<footer>
+  <p>© 2024 Финансовое приложение. Все права защищены.</p>
+</footer>
+</body>
+</html>

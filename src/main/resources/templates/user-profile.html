@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Профиль пользователя</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <style>
+        .transaction-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .transaction-item {
+            background: #fff;
+            border: 1px solid #ddd;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .transaction-item span {
+            display: block;
+            margin: 5px 0;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background: #4e54c8;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #3b3b9e;
+        }
+
+        .navigation {
+            margin-bottom: 20px;
+        }
+
+        .navigation a {
+            background: #4e54c8;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-right: 10px;
+            transition: background 0.3s ease;
+        }
+
+        .navigation a:hover {
+            background: #3b3b9e;
+        }
+
+         footer {
+             background: linear-gradient(90deg, #4e54c8, #8f94fb);
+             color: white;
+             text-align: center;
+             padding: 1px ; /* Уменьшена высота отступов */
+             font-size: 0.8em; /* Уменьшен размер шрифта */
+         }
+
+    </style>
+</head>
+<body>
+<header>
+    <nav>
+        <ul>
+            <li><a href="/moderator">Список пользователей</a></li>
+            <li><a href="/logout">Выход</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <h1>Профиль пользователя: <span th:text="${user.name}"></span></h1>
+    <p>Email: <span th:text="${user.email}"></span></p>
+
+    <h2>Транзакции</h2>
+    <ul class="transaction-list">
+        <li th:each="transaction : ${transactions}" class="transaction-item">
+            <span>Тип: <span th:text="${transaction.type}"></span></span>
+            <span>Сумма: <span th:text="${transaction.amount}"></span></span>
+            <span>Категория: <span th:text="${transaction.category}"></span></span>
+        </li>
+    </ul>
+
+    <h2>Бюджет</h2>
+    <p>Доход: <span th:text="${budget.totalIncome}"></span></p>
+    <p>Расходы: <span th:text="${budget.totalExpense}"></span></p>
+
+    <h2>Создать отчет</h2>
+    <form th:action="@{/moderator/user/{id}/create-report(id=${user.id})}" method="post">
+        <textarea name="content" rows="5" cols="40" placeholder="Введите содержание отчета"></textarea>
+        <button type="submit">Отправить отчет</button>
+    </form>
+</main>
+
+<footer>
+    <p>© 2024 Финансовое приложение. Все права защищены.</p>
+</footer>
+</body>
+</html>

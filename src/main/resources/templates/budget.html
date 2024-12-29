@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бюджет</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<header>
+    <nav>
+        <ul>
+            <li><a href="/home">Главная</a></li>
+            <li><a href="/transactions">Транзакции</a></li>
+            <li><a href="/budget">Бюджет</a></li>
+            <li><a href="/reports">Отчеты</a></li>
+            <li><a href="/advice">Советы</a></li>
+            <li><a href="/logout">Выход</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <h1>Ваш бюджет</h1>
+
+    <div>
+        <h2>Информация о бюджете</h2>
+        <p th:if="${budget != null}">
+            Планируемый доход: <span th:text="${budget?.totalIncome}">0</span><br>
+            Планируемые расходы: <span th:text="${budget?.totalExpense}">0</span><br>
+            Начало периода: <span th:text="${budget?.startDate}">01.01.2024</span><br>
+            Конец периода: <span th:text="${budget?.endDate}">31.12.2024</span>
+        </p>
+        <p th:if="${budget == null}">
+            <em>Бюджет не задан. Установите его ниже.</em>
+        </p>
+    </div>
+
+    <h2>Установить новый бюджет</h2>
+    <form action="/budget" method="post">
+        <!-- Токен CSRF для защиты формы -->
+        <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+
+        <label for="totalIncome">Планируемый доход:</label>
+        <input type="number" id="totalIncome" name="totalIncome" step="0.01" required><br><br>
+
+        <label for="totalExpense">Планируемые расходы:</label>
+        <input type="number" id="totalExpense" name="totalExpense" step="0.01" required><br><br>
+
+        <label for="startDate">Дата начала:</label>
+        <input type="date" id="startDate" name="startDate" required><br><br>
+
+        <label for="endDate">Дата окончания:</label>
+        <input type="date" id="endDate" name="endDate" required><br><br>
+
+        <button type="submit">Сохранить</button>
+    </form>
+</main>
+
+<footer>
+    <p>© 2024 Финансовое приложение. Все права защищены.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Управление пользователями</title>
+    <style>
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9fbfc;
+            color: #333;
+        }
+
+        header {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            background: linear-gradient(90deg, #4e54c8, #8f94fb);
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        header nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 25px;
+            background: linear-gradient(90deg, #4e54c8, #8f94fb);
+            transition: background 0.3s ease;
+        }
+
+        header nav a:hover {
+            background: linear-gradient(90deg, #3b3b9e, #5a67d8);
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table th, table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+
+        table th {
+            background-color: #f0f0f5;
+            color: #4e54c8;
+        }
+
+        table td form button {
+            background: linear-gradient(90deg, #ff7e5f, #feb47b);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        table td form button:hover {
+            background: linear-gradient(90deg, #ff512f, #dd2476);
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        form button {
+            background: linear-gradient(90deg, #4e54c8, #8f94fb);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        form button:hover {
+            background: linear-gradient(90deg, #3b3b9e, #5a67d8);
+        }
+    </style>
+</head>
+<body>
+<header>
+    <nav>
+        <a href="/admin">Назад</a>
+    </nav>
+</header>
+
+<main>
+    <h1>Управление пользователями</h1>
+
+    <!-- Таблица пользователей -->
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Имя</th>
+            <th>Email</th>
+            <th>Роли</th>
+            <th>Действия</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.role}"></td> <!-- Отображение ролей пользователя -->
+            <td>
+                <form th:action="@{/admin/users/delete/{id}(id=${user.id})}" method="post">
+                    <button type="submit">Удалить</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Форма для добавления нового пользователя с выбором роли -->
+    <h2>Добавить нового пользователя</h2>
+    <form th:action="@{/admin/users}" method="post">
+        <label>Имя: <input type="text" name="name" /></label>
+        <label>Email: <input type="email" name="email" /></label>
+        <label>Пароль: <input type="password" name="password" /></label>
+        <label>Роль:
+            <select name="role">
+                <option value="ROLE_USER">Пользователь</option>
+                <option value="ROLE_MODERATOR">Модератор</option>
+                <option value="ROLE_ADMIN">Администратор</option>
+            </select>
+        </label>
+        <button type="submit">Добавить</button>
+    </form>
+</main>
+</body>
+</html>
